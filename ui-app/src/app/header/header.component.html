@@ -1,0 +1,10 @@
+<nav class="navbar navbar-inverse bg-2">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">CommentPlay</a>
+    </div>
+    <ul  *ngIf="isLoggedin" class="nav navbar-nav navbar-right">
+      <li><a (click)="logoutUser()"><span class="glyphicon glyphicon-log-in" ></span>  Sign Out</a></li>
+    </ul>
+  </div>
+</nav>

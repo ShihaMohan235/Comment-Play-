@@ -1,0 +1,62 @@
+<h1>Comments</h1>
+<!-- Custom Success/Error Message -->
+<div class="row show-hide-message" *ngIf="message && newPost">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
+<button type="button" class="btn btn-warning" *ngIf="!newPost" (click)="newCommentForm()">Add Comment</button>
+<br><br>
+<!-- New Comment Form -->
+<form [formGroup]="form" name="commentForm" (submit)="onSubmit()" *ngIf="newPost" class="comment-box">
+  <!-- Body Input -->
+  <div class="form-group">
+    <label for="body">Comment</label>
+    <div [ngClass]="{'has-success': form.controls.body.valid, 'has-error': form.controls.body.dirty && form.controls.body.errors}">
+      <textarea name="body" rows="8" cols="80" placeholder="Enter Comment" class="form-control" formControlName="body"></textarea>
+      <ul class="help-block">
+        <li *ngIf="form.controls.body.dirty && form.controls.body.errors?.required">This field is required.</li>
+        <li *ngIf="(form.controls.body.dirty && form.controls.body.errors?.minlength) || (form.controls.body.dirty && form.controls.body.errors?.maxlength)">Max length: 500, Min length: 5</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Go Back Button -->
+  <button [disabled]="processing" type="button" name="button" (click)="goBack()" class="btn btn-warning">Go Back</button>
+  <!-- Submit Button -->
+  <button [disabled]="processing || !form.valid" type="submit" name="button" class="btn btn-success" (click)="goBack()">Submit</button>
+
+</form>
+<!-- New Blog Form -->
+
+
+<div *ngIf="!newPost" class="comment-box">
+  <!-- Panel Outer Layer -->
+  <div class="panel panel-primary" *ngFor="let data of allComments; let i = index" >
+    <!-- Panel Body -->
+    <div class="panel-body">
+      {{data.body}}
+    </div>
+
+    <!-- Panel Footer Start -->
+    <div class="panel-footer">
+      <strong>Posted by: </strong>{{data.createdBy}}
+      <br />
+      <strong>Date: </strong>{{data.createdAt | date: medium}}
+      <br />
+      <div>
+        <strong>Likes: </strong>{{data.likes}}
+        <br />
+        <strong>Dislikes: </strong>{{data.dislikes}}
+      </div>
+    </div>
+
+        <!-- Like Button -->
+        <button type="button" name="button" class="btn btn-sm btn-success" (click)="likeClicked(data.createdBy)"><span class="glyphicon glyphicon-thumbs-up" >&nbsp;</span>Likes</button>
+        
+        <!-- Dislike Button -->
+        <button type="button" name="button" class="btn btn-sm btn-warning" (click)="dislikeClicked(data.createdBy)"><span class="glyphicon glyphicon-thumbs-down" >&nbsp;</span>Dislikes</button>
+
+  </div>
+</div>

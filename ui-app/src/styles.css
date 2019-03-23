@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+	background-color: #dce6e4;
+	background-image: url('assets/images/background.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
