@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CommentService } from '../comment.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment-box',
@@ -16,11 +17,16 @@ export class CommentBoxComponent implements OnInit {
   processing = false;
   allComments = [];
   
-  constructor(private formBuilder: FormBuilder, private commentService: CommentService) {
+  constructor(private formBuilder: FormBuilder, private commentService: CommentService, private ngZone: NgZone,
+    private router: Router) {
     this.createNewBlogForm(); // Create new blog form on start up
   }
 
   ngOnInit() {
+  if(!localStorage.getItem('userName')) {
+    alert("You should login first.... Click ok to redirect");
+    this.ngZone.run(() => this.router.navigate(['']));
+  } 
  		this.fetchAllcomments();
   }
 
@@ -44,7 +50,6 @@ export class CommentBoxComponent implements OnInit {
   	this.commentService.getAllcomments()
       .subscribe(
         (data) => {
-          console.log(data.comments.length, "data");
           for(let i =0; i< data.comments.length; i++) {
             this.allComments.push(data.comments[i]);
           }
@@ -83,16 +88,16 @@ export class CommentBoxComponent implements OnInit {
    });
   }
 
-likeClicked(user) {
-	  	this.commentService.likeCommentbyuser(user)
+likeClicked(user,date) {
+	  	this.commentService.likeCommentbyuser(user, date)
       .subscribe(
         (data) => {
         	this.allComments = [];
         	this.fetchAllcomments();
         });
 }
-dislikeClicked(user) {
-	  	this.commentService.dislikeCommentbyuser(user)
+dislikeClicked(user, date) {
+	  	this.commentService.dislikeCommentbyuser(user, date)
       .subscribe(
         (data) => {
         	this.allComments = [];

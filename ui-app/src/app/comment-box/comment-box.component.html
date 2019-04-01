@@ -53,10 +53,10 @@
     </div>
 
         <!-- Like Button -->
-        <button type="button" name="button" class="btn btn-sm btn-success" (click)="likeClicked(data.createdBy)"><span class="glyphicon glyphicon-thumbs-up" >&nbsp;</span>Likes</button>
+        <button type="button" name="button" class="btn btn-sm btn-success" (click)="likeClicked(data.createdBy, data.createdAt)"><span class="glyphicon glyphicon-thumbs-up" >&nbsp;</span>Likes</button>
         
         <!-- Dislike Button -->
-        <button type="button" name="button" class="btn btn-sm btn-warning" (click)="dislikeClicked(data.createdBy)"><span class="glyphicon glyphicon-thumbs-down" >&nbsp;</span>Dislikes</button>
+        <button type="button" name="button" class="btn btn-sm btn-warning" (click)="dislikeClicked(data.createdBy, data.createdAt)"><span class="glyphicon glyphicon-thumbs-down" >&nbsp;</span>Dislikes</button>
 
   </div>
 </div>

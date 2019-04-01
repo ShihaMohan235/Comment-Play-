@@ -15,7 +15,6 @@ module.exports = (router) => {
     }else if(!req.body.userId) {
       res.json({ success: false, message: 'No userId was provided' }); // Return error
     } else{
-      console.log(res)
             res.json({
                   success: true,
                   message: 'Success!',

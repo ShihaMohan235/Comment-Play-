@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, NgZone } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentService } from '../comment.service';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   public auth2: any;
   constructor(private element: ElementRef, private commentService: CommentService,
-  private router: Router) { }
+  private router: Router, private ngZone: NgZone) { }
 
   public googleInit() {
     let that = this;
@@ -53,8 +53,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data) => {
           that.setCookies(data);
-          that.router.navigate(['/comments']);
-          window.location.reload();
+          that.ngZone.run(() => that.router.navigate(['/comments']));
         });
       }, function (error) {
         console.log(JSON.stringify(error, undefined, 2));

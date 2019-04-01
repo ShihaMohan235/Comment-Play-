@@ -28,24 +28,25 @@ export class CommentService {
     .map((res) => res.json());	
   }
 
-  likeCommentbyuser(userName) {
+  likeCommentbyuser(userName, date) {
   	const user = {
-      'user': userName
+      'user': userName,
+      'date': date
     };
     return this.http.put(environment.API_BASE_URL + 'comments/likeComment', user, this.options)
     .map((res) => res.json());	
   }
 
-  dislikeCommentbyuser(userName) {
+  dislikeCommentbyuser(userName, date) {
   	const user = {
-      'user': userName
+      'user': userName,
+      'date': date
     };
     return this.http.put(environment.API_BASE_URL + 'comments/dislikeComment', user, this.options)
     .map((res) => res.json());	
   }
 
   loginUser(userobj) {
-  	console.log(userobj)
     return this.http.post(environment.API_BASE_URL + 'authentication/login', userobj, this.options)
     .map((res) => res.json());	
   }

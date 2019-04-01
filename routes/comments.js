@@ -7,7 +7,6 @@ module.exports = (router) => {
 // CREATE NEW COMMENT 
 
   router.post('/newComment', (req, res) => {
-    console.log(req.body)
       // Check if comment body was provided
       if (!req.body.body) {
         res.json({ success: false, message: 'comment body is required.' }); // Return error message
@@ -19,7 +18,8 @@ module.exports = (router) => {
           // Create the comment object for insertion into database
           const comment = new Comment({
             body: req.body.body, // Body field
-            createdBy: req.body.createdBy // CreatedBy field
+            createdBy: req.body.createdBy, // CreatedBy field
+            createdAt: Date.now()
           });
           // Save comment into database
           comment.save((err) => {
@@ -73,7 +73,7 @@ router.put('/likeComment', (req, res) => {
       res.json({ success: false, message: 'No id was provided.' }); // Return error message
     } else {
       // Search the database with id
-      Comment.findOne({ createdBy: req.body.user }, (err, comment) => {
+      Comment.findOne({ createdBy: req.body.user, createdAt: req.body.date }, (err, comment) => {
         // Check if error was encountered
         if (err) {
           res.json({ success: false, message: 'Invalid Comment id' }); // Return error message
@@ -106,7 +106,7 @@ router.put('/likeComment', (req, res) => {
       res.json({ success: false, message: 'No id was provided.' }); // Return error message
     } else {
       // Search database for comment post using the id
-      Comment.findOne({ createdBy: req.body.user }, (err, comment) => {
+      Comment.findOne({ createdBy: req.body.user , createdAt: req.body.date}, (err, comment) => {
         // Check if error was found
         if (err) {
           res.json({ success: false, message: 'Invalid comment id' }); // Return error message

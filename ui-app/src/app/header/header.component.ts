@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,21 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
- public isLoggedin = false;
-  constructor(private router: Router) { }
+
+  constructor(private router: Router, private ngZone: NgZone) { }
 
   ngOnInit() {
-   if(!localStorage.getItem('userName')) {
-  	this.isLoggedin = false;
-  } else {
-  	this.isLoggedin = true;
-  }
+
   }
 
   logoutUser(){
     localStorage.clear();
-    this.router.navigate(['']);
-    window.location.reload();
+    this.ngZone.run(() => this.router.navigate(['']));
   }
-
 }
